@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Todo</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/index.css">
+    <link rel="stylesheet" href="assets/css/sidenav.css">
+    
+</head>
+<body id="body">
+   <div class="container-fluid">
+       <div class="row" style="margin-bottom: 30px;">
+           <div class="header">
+                <div id="mySidenav" class="sidenav">
+                        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+                        <a href="javascript:void(0);" onclick="openCompletedTasks()" class="side-nav-items">Completed Tasks</a>
+                        <a href="javascript:void(0);" onclick="openCompletedTasks()" class="side-nav-items">Filter</a>
+                      </div>
+            <div class="float-left mr-3 pt-2" style="cursor: pointer;">
+                <div class="sideMenu" onclick="openSideNav();"><i class="fa fa-bars" style="font-size: 24px"></i></div>
+                 
+            </div>
+            <div class="float-left">
+                    <h2 class="align-middle">Today's Reminders</h2>
+                <span id="date"></span>
+            </div>
+            <div class="float-right">
+                
+                <span><a href="javascript:void(0)" style="padding-right: 25px; color: #3676c5; text-shadow: 6px 10px 11px rgba(19, 18, 18, 0.18)" onclick="addNewTaskWindow();"><i class="fas fa-plus-circle fa-3x"></i></a></span>
+            </div>
+            <div class="float-none"></div>
+           </div>
+        </div>
+        <div class="row list">
+                <div class="offset-lg-2"></div>
+                <div class="col-lg-8">
+                    <div class="todo-items" id="todo-items">
+                            <!-- <div class="card">
+                                    <div class="card-body">
+                                        <div class="float-left">Do stuff here</div>
+                                        <div class="float-right">
+                                            <span style="color: #077707;"><i class="fa fa-edit"></i></span>
+                                            <span style="padding-left:15px;font-size: 20px;
+                                            font-weight: 600;
+                                            color: #b5aeae;">x</span>
+                                        </div>
+                                    </div>
+                                </div>
+            
+                                <div class="card">
+                                        <div class="card-body">
+                                            <div class="float-left">Do stuff here again</div>
+                                            <div class="float-right">
+                                                <span style="color: #077707;"><i class="fa fa-edit"></i></span>
+                                                <span style="padding-left:15px;font-size: 20px;
+                                                font-weight: 600;
+                                                color: #b5aeae;">x</span>
+                                            </div>
+                                        </div>
+                                    </div> -->
+                    </div>
+                    
+                </div>
+                <div class="col-lg-2"></div>
+        </div>
+   </div>
+   <div id="footer"  style="position: fixed; bottom:0; right:0;">
+        <div class="footer-container">
+            <span style="font-size: 11px; padding-right:10px"><em>Made with <span style="color:red"><i class="fa fa-heart" aria-hidden="true"></i></span> by Landover IT Unit.</em></span>
+        </div>
+    </div>
+
+   <!--Pop up for expiring taskks-->
+   <div id="expiringTasksModal" class="modal fade" role="dialog">
+    <div class="modal-dialog">
+  
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          
+          <h4 class="modal-title">Tasks expiring in 5 days</h4>
+        </div>
+        <div class="modal-body" id="expiringTasksModalBody">
+          
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        </div>
+      </div>
+  
+    </div>
+  </div>
+
+    <div id="popups"></div>
+
+
+   <script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+   <script src="assets/js/bootstrap.min.js"></script>
+   <script src="assets/fonts/js/fontawesome.js"></script>
+   <script type="text/javascript" src="assets/js/index.js"></script>
+   <script type="text/javascript" src="assets/js/sidenav.js"></script>
+</body>
+</html>

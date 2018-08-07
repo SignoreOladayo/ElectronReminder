@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Add Task</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="assets/css/fontawesome.css">
+    <link rel="stylesheet" href="assets/css/jquery-ui.theme.min.css">
+</head>
+<body>
+    <div class="container">
+        <div class="row mt-3 mb-4">
+            <div class="col-md-12">
+                <h5 class="pb-2 border-bottom">Add new Task</h5>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <form id="addTaskForm">
+                    <div class="form-group">
+                        <label for="Task-Title">Task Title</label>
+                        <input id="title" type="text" name="title" id="title" class="form-control">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="description">Task Description</label>
+                        <textarea id="description" name="description" id="description" class="form-control" cols="30" rows="3"></textarea>
+                    </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="deadline">Deadline</label>
+                    <input type="text" id="datepicker" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="reminder-start-date">Reminder Date</label>
+                    <input type="text" id="reminder-datepicker" class="form-control">
+                </div>
+            </div>
+
+            <div class="col-4">
+                <div class="form-group">
+                    <label for="reminder-interval">Reminder Interval</label>
+                    <input type="text" id="interval" class="form-control">
+                </div>
+            </div>
+            <div class="col-4"></div>
+            <div class="col-4"></div>
+        </div>
+        <button class="btn btn-success btn-block" onclick="addTaskItem();">Add Task</button>
+        </form>
+        </div>
+
+
+<script>if (typeof module === 'object') {window.module = module; module = undefined;}</script>
+<script src="assets/js/jquery-3.3.1.min.js"></script>
+<script src="assets/js/jquery-ui.min.js"></script>
+<script src="assets/js/popper.min.js"></script>
+<script src="assets/js/bootstrap.min.js"></script>
+<script src="assets/js/addTask.js"></script>
+</body>
+</html>

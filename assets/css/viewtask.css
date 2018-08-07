@@ -1,0 +1,9 @@
+#dueDate {
+    font-weight: 600;
+}
+
+#dueDateContainer p {
+    padding: 15px 5px;
+    box-shadow: 0px 0px 5px 0px rgba(0,0,0,0.18);
+    border-radius: 4px;
+}

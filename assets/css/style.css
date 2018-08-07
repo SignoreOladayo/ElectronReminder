@@ -1,0 +1,10 @@
+.header {
+    background-color: #e8e6e6;
+    padding:25px 15px;
+    color:#424a41;
+    width: 100%;
+}
+
+.list .card {
+    margin-bottom:15px;
+}
