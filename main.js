@@ -100,6 +100,21 @@ ipcMain.on('open-task-reminder-window', function(event, task) {
     })
 })
 
+ipcMain.on('clicked-open-all-tasks', function(){
+    let allTasksWindow = new BrowserWindow({show:false, alwaysOnTop:true})
+
+    allTasksWindow.loadURL(url.format({
+        protocol: 'file',
+        slashe: true,
+        pathname: path.join(__dirname, 'allTasksWindow.html')
+        
+    }))
+
+    allTasksWindow.once('ready-to-show', function(){
+        allTasksWindow.show()
+    })
+})
+
 // win.on('minimize', function(event) {
 //     event.preventDefault();
 //     win.minimize();

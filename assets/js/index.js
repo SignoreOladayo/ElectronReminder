@@ -65,8 +65,11 @@ $(document).ready(function(){
                 
                 if(dueDate < todaysDate) {
                     //Overdue task
+                    //update status
+                    updateToPending(task.dataValues.id)
 
                 }
+
             })
         })
 
@@ -103,6 +106,26 @@ ipcRenderer.on('newTask', function(event, newTask){
     );
 
 })
+
+
+
+function updateToPending(taskId) {
+    Task.update(
+        {
+          status: 2
+        },
+        {
+            where:{
+                id: taskId
+            }
+        }
+    )
+    .then(console.log('updated'))
+}
+
+function openAllTasks() {
+    ipcRenderer.send('clicked-open-all-tasks')
+}
 
 function reminderPopup(task) {
 
