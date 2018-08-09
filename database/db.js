@@ -1,7 +1,8 @@
 
 const Sequelize = require('sequelize')
-const dbCon = new Sequelize({dialect: 'sqlite', storage: '/todo/database/database.sqlite'});
+const path = require('path')
 
+const dbCon = new Sequelize('sqlite:database/database.sqlite')
 
 
 module.exports = dbCon;

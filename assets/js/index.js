@@ -2,8 +2,9 @@ const electron = require('electron');
 const url = require('url');
 const path = require('path');
 const ipcRenderer = require('electron').ipcRenderer
-const Task = require('/todo/models/Task')
+const Task = require(path.join(__dirname, '/models/Task'))
 const Sequelize = require('sequelize')
+
 
 document.getElementById('date').innerText = getTodaysDate();
 
@@ -63,7 +64,7 @@ $(document).ready(function(){
                     reminderPopup(task)
                 } 
                 
-                if(dueDate < todaysDate) {
+                if(duedate < todaysDate) {
                     //Overdue task
                     //update status
                     updateToPending(task.dataValues.id)
@@ -110,6 +111,7 @@ ipcRenderer.on('newTask', function(event, newTask){
 
 
 function updateToPending(taskId) {
+    console.log('updating')
     Task.update(
         {
           status: 2

@@ -1,5 +1,6 @@
 const electron = require('electron')
-const Task = require('/todo/models/Task')
+const path = require('path')
+const Task = require(path.join(__dirname, 'models/Task'))
 
 //get all tasks
 Task.findAll()
@@ -11,7 +12,7 @@ Task.findAll()
                 '<div class="card-body">'+
                 '<div class="">' +
                     '<h6 id="title">'+task.dataValues.title+'</h6>' +
-                    '<p class="completion-date"><span style="color: green">Date Completed :</span> '+new Date(task.dataValues.completionDate).toDateString()+'</p>'+
+                    '<p class="completion-date">Status :<span id="status'+task.dataValues.id+'"></span> </p>'+
                 '</div>' +
 
                 // '<div class="float-right">'+
@@ -21,20 +22,32 @@ Task.findAll()
                 '<div class="clearfix"></div>'
 
                 if (task.dataValues.status == 1) {
-                    taskCard.setAttribute('style', 'margin-bottom: 15px; border-left:1px solid green')
+                    taskCard.setAttribute('style', 'margin-bottom: 15px; border-left:3px solid green')
                 }
 
                 if (task.dataValues.status == 0) {
-                    taskCard.setAttribute('style', 'margin-bottom: 15px; border-left:1px solid orange')
+                    taskCard.setAttribute('style', 'margin-bottom: 15px; border-left:3px solid orange')
                 }
 
                 if (task.dataValues.status == 2) {
-                    taskCard.setAttribute('style', 'margin-bottom: 15px; border-left:1px solid red')
+                    taskCard.setAttribute('style', 'margin-bottom: 15px; border-left:3px solid red')
                 }
 
                 taskCard.setAttribute('class', 'card')
-                taskCard.setAttribute('style', 'margin-bottom: 15px')
+                // taskCard.setAttribute('style', 'margin-bottom: 15px')
 
-                document.querySelector('#completed-tasks').appendChild(taskCard)
+                document.querySelector('#all-tasks').appendChild(taskCard)
+
+                if (task.dataValues.status == 0) {
+                    document.querySelector('#status'+task.dataValues.id).innerText = 'Not Completed'
+                }
+
+                if (task.dataValues.status == 1) {
+                    document.querySelector('#status'+task.dataValues.id).innerText = 'Completed'
+                }
+
+                if (task.dataValues.status == 2) {
+                    document.querySelector('#status'+task.dataValues.id).innerText = 'Overdue'
+                }
          })
      })

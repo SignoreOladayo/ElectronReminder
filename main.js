@@ -16,7 +16,7 @@ function createWindow() {
     }))
     
 
-    // win.webContents.openDevTools()
+    win.webContents.openDevTools()
 
     ipcMain.on('taskInserted', function(event, task){
         win.webContents.send('newTask', task)
