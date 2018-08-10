@@ -289,7 +289,7 @@ function addNewTaskWindow() {
         addNewTaskWin.show();
     })
 
-    // addNewTaskWin.webContents.openDevTools()
+    addNewTaskWin.webContents.openDevTools()
 
 }
 

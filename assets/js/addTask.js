@@ -3,7 +3,8 @@ $('#reminder-datepicker').datepicker();
 
 
 // const dbCon = require('/todo/database/db')
-const Task = require('/todo/models/Task');
+const path = require('path')
+const Task = require(path.join(__dirname, 'models/Task'));
 const electron = require('electron')
 const ipcRenderer = require('electron').ipcRenderer
 
