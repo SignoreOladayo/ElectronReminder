@@ -1,6 +1,8 @@
 const {app, BrowserWindow, ipcMain} = require('electron');
 const url = require('url');
 const path = require('path')
+const Task = require(path.join(__dirname, 'models/Task'))
+const Sequelize = require('sequelize')
 // require('electron-reload')(__dirname);
 
 function createWindow() {
@@ -16,7 +18,7 @@ function createWindow() {
     }))
     
 
-    win.webContents.openDevTools()
+    // win.webContents.openDevTools()
 
     ipcMain.on('taskInserted', function(event, task){
         win.webContents.send('newTask', task)
@@ -80,23 +82,32 @@ ipcMain.on('openCompletedTasks', function (event, tasks) {
 })
 
 ipcMain.on('open-task-reminder-window', function(event, task) {
-
-    //Check if reminderWindow is currently open
-
-    let reminderWindow = new BrowserWindow({show: false, width:600, alwaysOnTop:true});
-
-    reminderWindow.loadURL(url.format({
-        protocol: 'file',
-        slashes: true,
-        pathname: path.join(__dirname, 'reminderWindow.html')
-    }))
-
-    reminderWindow.webContents.on('did-finish-load', function(){
-        reminderWindow.webContents.send('open-new-task-reminder-window', task.dataValues)
-        if (win.isMinimized()) {
-            win.restore()
+    
+    //confirm the status of the task again
+    Task.findOne({
+        where:{
+           id: task.id
         }
-        reminderWindow.show();
+    })
+    .then(result => {
+        
+        if (result.dataValues.status == 0) {
+            let reminderWindow = new BrowserWindow({show: false, width:600, alwaysOnTop:true});
+            
+                reminderWindow.loadURL(url.format({
+                    protocol: 'file',
+                    slashes: true,
+                    pathname: path.join(__dirname, 'reminderWindow.html')
+                }))
+            
+                reminderWindow.webContents.on('did-finish-load', function(){
+                    reminderWindow.webContents.send('open-new-task-reminder-window', task)
+                    if (win.isMinimized()) {
+                        win.restore()
+                    }
+                    reminderWindow.show();
+                })
+        }
     })
 })
 

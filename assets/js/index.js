@@ -18,7 +18,7 @@ $(document).ready(function(){
             ['createdAt', 'DESC']
         ]
     })
-    .then(tasks => {
+    .then(tasks => { 
         if (tasks.length == 0) {
             $('#todo-items').append(
                 '<div id="no-tasks"><h3 style="text-align:center;">Clear as the sky!</h3></div>'
@@ -42,34 +42,8 @@ $(document).ready(function(){
                 '</div>'
                 )
 
-                //check if the reminder date is today's date
-                let todaysDate; 
-                let date = new Date()
-                todaysDate = date.getFullYear()+date.getMonth()+date.getDate()
-
-                let reminderDate = task.reminderDate.getFullYear()+task.reminderDate.getMonth()+task.reminderDate.getDate()
-
-                let duedate = task.dueDate.getFullYear()+task.dueDate.getMonth()+task.dueDate.getDate()
-
-                if (todaysDate == reminderDate) {
-
-                    reminderPopup(task)
-                    //Get the reminder interval
-                    //and add it to the current time
-                    //then probably start a count down timer
-                    
-                }
-                
-                if (reminderDate > todaysDate && reminderDate < duedate) {
-                    reminderPopup(task)
-                } 
-                
-                if(duedate < todaysDate) {
-                    //Overdue task
-                    //update status
-                    updateToPending(task.dataValues.id)
-
-                }
+                //fire the reminder engine
+                initializeReminderEngine(task.dataValues)
 
             })
         })
@@ -106,8 +80,39 @@ ipcRenderer.on('newTask', function(event, newTask){
         '</div>'
     );
 
+    initializeReminderEngine(newTask)
+
 })
 
+
+function initializeReminderEngine(task) {
+    
+    //check if the reminder date is today's date
+    let todaysDate; 
+    let date = new Date()
+    todaysDate = date.getFullYear()+date.getMonth()+date.getDate()
+
+    let reminder = new Date(task.reminderDate)
+
+    let due = new Date(task.dueDate)
+
+    let reminderDate = reminder.getFullYear()+reminder.getMonth()+reminder.getDate()
+
+    let duedate = due.getFullYear()+due.getMonth()+due.getDate()
+
+    if (todaysDate >= reminderDate && todaysDate <= duedate) {
+
+        reminderPopup(task)
+      
+    }
+    
+    if(duedate < todaysDate) {
+        //Overdue task
+        //update status
+        updateToPending(task.id)
+
+    }
+}
 
 
 function updateToPending(taskId) {
@@ -250,11 +255,13 @@ function inHowManyDays(days) {
 }
 
 function daysRemaining(deadline) {
+    
     d = new Date()
     let todaysDate = Date.UTC(d.getFullYear(), d.getMonth(), d.getDate())
     
+    let dd = new Date(deadline)
     
-    let dueDate = Date.UTC(deadline.getFullYear(), deadline.getMonth(), deadline.getDate());
+    let dueDate = Date.UTC(dd.getFullYear(), dd.getMonth(), dd.getDate());
     
 
      let datediff = Math.floor((dueDate - todaysDate)/ 86400000)
