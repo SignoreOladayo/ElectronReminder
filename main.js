@@ -126,6 +126,37 @@ ipcMain.on('clicked-open-all-tasks', function(){
     })
 })
 
+ipcMain.on('open-reporting-window', function() {
+    let reportingWindow;
+
+    reportingWindow = new BrowserWindow({show:false, alwaysOnTop:true})
+
+    reportingWindow.loadURL(url.format({
+        protocol: 'file',
+        slashes: true,
+        pathname: path.join(__dirname, 'reportingWindow.html')
+    }))
+
+    reportingWindow.once('ready-to-show', function(){
+        reportingWindow.show()
+    })
+})
+
+ipcMain.on('got-results', function(event, tasks) {
+    let resultsWindow
+    resultsWindow = new BrowserWindow({width:800, height:800, show:false, alwaysOnTop:true})
+    resultsWindow.loadURL(url.format({
+        protocol: 'file',
+        slashes:true,
+        pathname: path.join(__dirname, 'results.html')
+    }))
+
+    resultsWindow.once('ready-to-show', function(){
+        resultsWindow.show()
+        resultsWindow.webContents.send('results', tasks)
+    })
+})
+
 // win.on('minimize', function(event) {
 //     event.preventDefault();
 //     win.minimize();

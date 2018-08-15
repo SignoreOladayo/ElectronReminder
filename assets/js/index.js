@@ -84,6 +84,10 @@ ipcRenderer.on('newTask', function(event, newTask){
 
 })
 
+function openReporting() {
+    ipcRenderer.send('open-reporting-window')
+}
+
 
 function initializeReminderEngine(task) {
     
