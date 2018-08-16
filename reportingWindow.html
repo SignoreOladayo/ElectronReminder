@@ -44,6 +44,12 @@
                             <input type="checkbox" id="uncompleted"> Uncompleted Tasks
                        
                     </div>
+
+                    <div class="form-group">
+                        
+                        <input type="checkbox" id="overdue"> Overdue Tasks
+                   
+                </div>
                     <button class="btn btn-success" type="submit">Search</button>
                 </form>
             </div>
@@ -51,12 +57,15 @@
             <div class="col-md-6" style="border-left: 1px solid darkgray">
                 <p>I think i remember the title</p>
 
-                <form action="">
+                <form action="" id="title-search">
                     <div class="form-group">
                         <input type="text" class="form-control" id="search-bar">
                     </div>
                     <button class="btn btn-success" type="submit">Search</button>
                 </form>
+
+                <h6 class="mt-5">Generate a Graphical Analysis for me.</h6>
+                <button class="btn btn-success" id="generate" style="width: 100%">Analyze Now</button>
             </div>
         </div>
     </div>
