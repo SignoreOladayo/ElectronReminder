@@ -46,7 +46,7 @@ ipcMain.on('view-task-window-open', function(event, task){
 
         viewTaskWindow.webContents.send('viewTask', task.dataValues)
 
-        viewTaskWindow.webContents.openDevTools();
+        // viewTaskWindow.webContents.openDevTools();
 
         viewTaskWindow.once('ready-to-show', () => {
             viewTaskWindow.show();
@@ -70,7 +70,7 @@ ipcMain.on('openCompletedTasks', function (event, tasks) {
     completedTasksWindow.webContents.on('did-finish-load', function() {
         completedTasksWindow.webContents.send('newCompletedTasksWindow', tasks)
 
-        completedTasksWindow.webContents.openDevTools();
+        // completedTasksWindow.webContents.openDevTools();
 
         completedTasksWindow.once('ready-to-show', () => {
             completedTasksWindow.show()
