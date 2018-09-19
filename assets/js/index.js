@@ -9,7 +9,7 @@ const Sequelize = require('sequelize')
 document.getElementById('date').innerText = getTodaysDate();
 
 $(document).ready(function(){
-    //get all tasks from db
+    //get all uncompleted tasks from db
     Task.findAll({
         where: {
                 status: 0
@@ -94,7 +94,8 @@ function initializeReminderEngine(task) {
     //check if the reminder date is today's date
     let todaysDate; 
     let date = new Date()
-    todaysDate = date.getFullYear()+date.getMonth()+date.getDate()
+    // todaysDate = date.getFullYear()+date.getMonth()+date.getDate()
+    todaysDate = new Date()
 
     let reminder = new Date(task.reminderDate)
 
@@ -110,16 +111,18 @@ function initializeReminderEngine(task) {
       
     }
     
-    if(duedate < todaysDate) {
+    if(todaysDate > due) {
+        // console.log('today - ' +todaysDate)
+        // console.log('duedate - ' +duedate)
         //Overdue task
         //update status
-        updateToPending(task.id)
+        updateToOverdue(task.id)
 
     }
 }
 
 
-function updateToPending(taskId) {
+function updateToOverdue(taskId) {
     console.log('updating')
     Task.update(
         {

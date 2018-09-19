@@ -3,13 +3,14 @@ const url = require('url');
 const path = require('path')
 const Task = require(path.join(__dirname, 'models/Task'))
 const Sequelize = require('sequelize')
+const AutoLaunch = require('auto-launch')
 // require('electron-reload')(__dirname);
 
 function createWindow() {
 
     let win;
 
-    win = new BrowserWindow({show: false});
+    win = new BrowserWindow({show: false, icon: path.join(__dirname, 'assets/icons/ico/logo.ico')});
 
     win.loadURL(url.format({
         protocol: 'file',
@@ -18,7 +19,7 @@ function createWindow() {
     }))
     
 
-    // win.webContents.openDevTools()
+    win.webContents.openDevTools()
 
     ipcMain.on('taskInserted', function(event, task){
         win.webContents.send('newTask', task)
@@ -34,7 +35,7 @@ function createWindow() {
 ipcMain.on('view-task-window-open', function(event, task){
     
     let viewTaskWindow;
-    viewTaskWindow = new BrowserWindow({show:false, width: 500, height: 500, modal:true, alwaysOnTop:true})
+    viewTaskWindow = new BrowserWindow({show:false, icon: path.join(__dirname, 'assets/icons/png/logo.png'), width: 500, height: 500, modal:true, alwaysOnTop:true})
     
     viewTaskWindow.loadURL(url.format({
         protocol: 'file',
@@ -59,7 +60,7 @@ ipcMain.on('openCompletedTasks', function (event, tasks) {
 
     let completedTasksWindow;
 
-    completedTasksWindow = new BrowserWindow({width: 500, height: 500, show: false, alwaysOnTop:true})
+    completedTasksWindow = new BrowserWindow({width: 500, icon: path.join(__dirname, 'assets/icons/png/logo.png'), height: 500, show: false, alwaysOnTop:true})
 
     completedTasksWindow.loadURL(url.format({
         protocol: 'file',
@@ -92,7 +93,7 @@ ipcMain.on('open-task-reminder-window', function(event, task) {
     .then(result => {
         
         if (result.dataValues.status == 0) {
-            let reminderWindow = new BrowserWindow({show: false, width:600, alwaysOnTop:true});
+            let reminderWindow = new BrowserWindow({show: false, icon: path.join(__dirname, 'assets/icons/png/logo.png'), width:600, alwaysOnTop:true});
             
                 reminderWindow.loadURL(url.format({
                     protocol: 'file',
@@ -112,7 +113,7 @@ ipcMain.on('open-task-reminder-window', function(event, task) {
 })
 
 ipcMain.on('clicked-open-all-tasks', function(){
-    let allTasksWindow = new BrowserWindow({show:false, alwaysOnTop:true})
+    let allTasksWindow = new BrowserWindow({show:false, icon: path.join(__dirname, 'assets/icons/png/logo.png'), alwaysOnTop:true})
 
     allTasksWindow.loadURL(url.format({
         protocol: 'file',
@@ -129,7 +130,7 @@ ipcMain.on('clicked-open-all-tasks', function(){
 ipcMain.on('open-reporting-window', function() {
     let reportingWindow;
 
-    reportingWindow = new BrowserWindow({show:false, alwaysOnTop:true})
+    reportingWindow = new BrowserWindow({show:false, icon: path.join(__dirname, 'assets/icons/png/logo.png'), alwaysOnTop:true})
 
     reportingWindow.loadURL(url.format({
         protocol: 'file',
@@ -144,7 +145,7 @@ ipcMain.on('open-reporting-window', function() {
 
 ipcMain.on('got-results', function(event, tasks) {
     let resultsWindow
-    resultsWindow = new BrowserWindow({width:800, height:800, show:false, alwaysOnTop:true})
+    resultsWindow = new BrowserWindow({width:800, icon: path.join(__dirname, 'assets/icons/png/logo.png'), height:800, show:false, alwaysOnTop:true})
     resultsWindow.loadURL(url.format({
         protocol: 'file',
         slashes:true,
@@ -167,5 +168,13 @@ ipcMain.on('got-results', function(event, tasks) {
 
 
 app.on('ready', function(){
+    let autolaunch = new AutoLaunch({
+        name: 'desktop_reminder',
+        path: app.getPath('exe')
+    });
+
+    autolaunch.isEnabled().then((isEnabled) => {
+        if(!isEnabled) autolaunch.enable();
+    })
     createWindow();
 });
