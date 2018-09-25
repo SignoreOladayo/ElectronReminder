@@ -25,6 +25,18 @@ function createWindow() {
         win.webContents.send('newTask', task)
     })
 
+    ipcMain.on('open-flight-hours', function(){
+       win.loadURL(url.format({
+           protocol: 'file',
+           slashes: true,
+           pathname: path.join(__dirname, 'flight-hours.html')
+       }))
+    })
+
+    ipcMain.on('go-back', function(){
+        win.webContents.goBack()
+    })
+
     
 
     win.once('ready-to-show', () => {

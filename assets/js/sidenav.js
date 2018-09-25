@@ -1,5 +1,5 @@
 // const Task = require('/todo/models/Task')
-// const ipcRenderer = require('electron').ipcRenderer
+// const ipcRenderer = require('electron').ipcRenderer;
 
 
 function openSideNav() {
@@ -22,4 +22,11 @@ function openCompletedTasks() {
         ipcRenderer.send('openCompletedTasks', tasks)
     }
     )
+}
+
+
+function openFlightHours() {
+    //add the back buitton
+    ipcRenderer.send('open-flight-hours')
+   
 }

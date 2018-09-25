@@ -10,6 +10,39 @@ document.getElementById('date').innerText = getTodaysDate();
 
 $(document).ready(function(){
     //get all uncompleted tasks from db
+    getUncompletedTasksForIndexPage()
+
+    
+})
+
+ipcRenderer.on('newTask', function(event, newTask){
+   
+    //Check if the sky is clear
+    if ($('#no-tasks')) {
+        $('#no-tasks').css('display', 'none');
+    }
+    $('#todo-items').prepend(
+        '<div class="card task-card" id="card-'+newTask.id+'" onclick="openTask(this);">' +
+            '<div class="card-body">' +
+                '<div class="float-left">'+
+                    '<h5>'+newTask.title+'</h5>' +
+                    '<p class="task-card-deadline"><span class="task-card-deadline-title" style="color: green">Due Date: </span>'+new Date(newTask.dueDate).toDateString()+'</p>' +
+                '</div>'+
+                    '<div class="float-right">' +
+                        '<span style="color: #077707; padding-right:15px;"><a id="'+newTask.id+'" href="javascript:void(0);" onclick="markTaskAsComplete(this);"><i class="fa fa-check"></i></a></span>' +
+                        '<span style="color: #077707;"><i class="fa fa-edit"></i></span>' +
+                        '<span style="padding-left:15px;font-size: 20px;font-weight: 600;color: #b5aeae;"><a id="'+newTask.id+'" href="javascript:void(0)" onclick="deleteTask(this);">x</a></span>' +
+                    '</div>'+
+             '</div>'+
+        '</div>'
+    );
+
+    initializeReminderEngine(newTask)
+
+})
+
+function getUncompletedTasksForIndexPage(){
+    //get all uncompleted tasks from db
     Task.findAll({
         where: {
                 status: 0
@@ -54,35 +87,7 @@ $(document).ready(function(){
         $('#expiringTasksModal').modal();
 
         modalQuery(5);
-
-    
-})
-
-ipcRenderer.on('newTask', function(event, newTask){
-   
-    //Check if the sky is clear
-    if ($('#no-tasks')) {
-        $('#no-tasks').css('display', 'none');
-    }
-    $('#todo-items').prepend(
-        '<div class="card task-card" id="card-'+newTask.id+'" onclick="openTask(this);">' +
-            '<div class="card-body">' +
-                '<div class="float-left">'+
-                    '<h5>'+newTask.title+'</h5>' +
-                    '<p class="task-card-deadline"><span class="task-card-deadline-title" style="color: green">Due Date: </span>'+new Date(newTask.dueDate).toDateString()+'</p>' +
-                '</div>'+
-                    '<div class="float-right">' +
-                        '<span style="color: #077707; padding-right:15px;"><a id="'+newTask.id+'" href="javascript:void(0);" onclick="markTaskAsComplete(this);"><i class="fa fa-check"></i></a></span>' +
-                        '<span style="color: #077707;"><i class="fa fa-edit"></i></span>' +
-                        '<span style="padding-left:15px;font-size: 20px;font-weight: 600;color: #b5aeae;"><a id="'+newTask.id+'" href="javascript:void(0)" onclick="deleteTask(this);">x</a></span>' +
-                    '</div>'+
-             '</div>'+
-        '</div>'
-    );
-
-    initializeReminderEngine(newTask)
-
-})
+}
 
 function openReporting() {
     ipcRenderer.send('open-reporting-window')
@@ -305,6 +310,12 @@ function addNewTaskWindow() {
 
     // addNewTaskWin.webContents.openDevTools()
 
+}
+
+function sync() {
+    //clear then get from db again
+    $('#todo-items').empty()
+    getUncompletedTasksForIndexPage()
 }
 
 
